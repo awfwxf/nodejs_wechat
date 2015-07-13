@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-wechat",
+  "version": "0.0.8",
+  "description": "nodejs wrapper of wechat(weixin) api - well tested and bug-free",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idy/nodejs-wechat"
+  },
+  "keywords": [
+    "wechat",
+    "weixin",
+    "nodejs",
+    "node"
+  ],
+  "author": "idy0013@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idy/nodejs-wechat/issues"
+  },
+  "homepage": "https://github.com/idy/nodejs-wechat",
+  "dependencies": {
+    "require-all": "0.0.8",
+    "mime": "~1.2.11"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "express-xml-parser": "0.0.3",
+    "xml2js": "~0.4.2",
+    "async": "~0.9.0"
+  }
+}
