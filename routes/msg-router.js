@@ -53,19 +53,43 @@ function onShortVideoMsg(session) {
 }
 
 //获取accessToken
+
 /*utils.getAccessToken(function(e,token){
-    console.log(e);
     console.log(token);
 });*/
 
 //设置公众号客服
 var userObj={
-    kf_account : "user1@xingfusansha",
-    kf_nick : "user1",
-    kf_id : "11",
-    nickname : "客服1",
-    password : "xingfusansha1"
+    kf_account : 'user1@xingfusansha',
+    kf_nick : 'user1',
+    kf_id : '11',
+    nickname : 'kefu1',
+    password : 'xingfusansha1'
 };
-utils.addServiceUser(userObj,function(error, response, body) {
-    console.log(body);
+var postData=JSON.stringify(userObj);
+
+
+var options = {
+    host: 'api.weixin.qq.com',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': postData.length
+    },
+    path: '/customservice/kfaccount/add?access_token=POu0fTHSZssYM28vb9G2C54kNZ501yXZjZxzF0tJvh7U0cz0fkmTeYXIsjqGRNjoB_NRXPB5lV0BOGFLH9Yu9f_bmksPMdbdqhTqta6CNRM',
+    method: 'POST'
+};
+
+utils.postRequest(options, JSON.stringify(userObj), function(res) {
+    console.log('STATUS: ' + res.statusCode);
+    console.log('HEADERS: ' + JSON.stringify(res.headers));
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+    });
+
 });
+/*
+utils.addServiceUser(userObj,function(error, response, body) {
+    console.log(error);
+    console.log(body);
+});*/
