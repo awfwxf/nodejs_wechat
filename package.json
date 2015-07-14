@@ -24,8 +24,8 @@
   "homepage": "https://github.com/awfwxf/nodejs_wechat",
   "dependencies": {
     "require-all": "0.0.8",
-    "express": "~4.9.0",
-    "express-middlewares-js" : "~1.0.3",
+    "express": ">=4.9.0",
+    "express-middlewares-js" : ">=1.0.3",
     "mime": "~1.2.11"
   },
   "devDependencies": {
