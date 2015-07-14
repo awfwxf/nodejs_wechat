@@ -18,7 +18,6 @@ var wechat = new Wechat(opt);
 
 //
 wechat.on('event.subscribe', function(session) {
-    console.log('wechat on event.subscribe!');
     session.replyTextMessage('您好！欢迎关注“幸福三沙”官方微信。幸福三沙带你走进美丽三沙，参与三沙生态环境建设，领略三沙独特风情，还等什么，快来一起体验三沙的魅力！\n ' +
         '<a href="http://1.frameworktv.sinaapp.com/">幸福三沙</a>');
     
@@ -26,7 +25,6 @@ wechat.on('event.subscribe', function(session) {
 
 //
 wechat.on('text', function(session) {
-    console.log('wechat on text message!');
     var comingMsg=session.incomingMessage.Content;
     var comingUser=session.incomingMessage.FromUserName;
     var sendMsg='你的openid是：\n'+comingUser+' \n 请将此告知系统管理员。';
@@ -36,6 +34,10 @@ wechat.on('text', function(session) {
     session.replyTextMessage(sendMsg);
 });
 
+//小视频消息
+wechat.on('shortvideo',function(session){
+
+});
 
 var server = http.createServer(function(req, res) {
     if (req.method === 'GET') {
