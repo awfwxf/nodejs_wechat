@@ -1,6 +1,7 @@
 /**
  * Created by fight on 2015/7/14.
  */
+var utils=require('../lib/util.js');
 
 module.exports = function (wechat) {
     //
@@ -45,8 +46,26 @@ function onShortVideoMsg(session) {
     var MediaId = session.incomingMessage.MediaId;
     var ThumbMediaId = session.incomingMessage.ThumbMediaId;
 
-    var rspText='comingUserId:'+comingUserId+'\n MediaId:'+MediaId+'\n ThumbMediaId:'+ThumbMediaId;
+    var rspText='已收到您提交的视频：\n comingUserId:'+comingUserId+'\n MediaId:'+MediaId+'\n ThumbMediaId:'+ThumbMediaId;
 
     session.replyTextMessage(rspText);
 
 }
+
+//获取accessToken
+/*utils.getAccessToken(function(e,token){
+    console.log(e);
+    console.log(token);
+});*/
+
+//设置公众号客服
+var userObj={
+    kf_account : "user1@xingfusansha",
+    kf_nick : "user1",
+    kf_id : "11",
+    nickname : "客服1",
+    password : "xingfusansha1"
+};
+utils.addServiceUser(userObj,function(error, response, body) {
+    console.log(body);
+});

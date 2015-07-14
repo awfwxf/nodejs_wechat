@@ -6,12 +6,8 @@ var app = express();
 var middlewares = require('express-middlewares-js');
 var Wechat = require('./lib/wechat.js');
 var msgRouter = require('./routes/msg-router.js');
-
-
-var opt = {
-    token: 'xfssHighLanderWechatToken',
-    url: '/wechat'
-};
+//config
+var config = require('./config')();
 
 app.use('/wechat', middlewares.xmlBodyParser({
     type: 'text/xml'
@@ -22,7 +18,7 @@ app.use('/api', middlewares.bodyParser());
 app.set('port', process.env.PORT || 80);
 
 
-var wechat = new Wechat(opt);
+var wechat = new Wechat(config);
 //
 app.get('/wechat', wechat.verifyRequest.bind(wechat));
 app.post('/wechat', wechat.handleRequest.bind(wechat));
