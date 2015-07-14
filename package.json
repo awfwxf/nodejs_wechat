@@ -1,14 +1,14 @@
 {
-  "name": "nodejs-wechat",
-  "version": "0.0.8",
-  "description": "nodejs wrapper of wechat(weixin) api - well tested and bug-free",
-  "main": "index.js",
+  "name": "nodejs_wechat",
+  "version": "0.0.1",
+  "description": "nodejs wrapper of wechat(weixin) api",
+  "main": "app.js",
   "scripts": {
     "test": "mocha test -R spec"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/idy/nodejs-wechat"
+    "url": "https://github.com/awfwxf/nodejs_wechat"
   },
   "keywords": [
     "wechat",
@@ -16,14 +16,16 @@
     "nodejs",
     "node"
   ],
-  "author": "idy0013@gmail.com",
+  "author": "awfwxf@qq.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/idy/nodejs-wechat/issues"
+    "url": "https://github.com/awfwxf/nodejs_wechat/issues"
   },
-  "homepage": "https://github.com/idy/nodejs-wechat",
+  "homepage": "https://github.com/awfwxf/nodejs_wechat",
   "dependencies": {
     "require-all": "0.0.8",
+    "express": "~4.9.0",
+    "express-middlewares-js" : "~1.0.3",
     "mime": "~1.2.11"
   },
   "devDependencies": {
