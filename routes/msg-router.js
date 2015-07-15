@@ -12,14 +12,13 @@ module.exports = function (wechat) {
     wechat.on('shortvideo', function(session){onShortVideoMsg(session)});
 };
 
-
 /**
  * 订阅事件
  */
 function onSubscribe(session) {
 
     session.replyTextMessage('您好！欢迎关注“幸福三沙”官方微信。幸福三沙带你走进美丽三沙，参与三沙生态环境建设，领略三沙独特风情，还等什么，快来一起体验三沙的魅力！\n ' +
-        '<a href="http://1.frameworktv.sinaapp.com/">幸福三沙</a>');
+        '<a href="http://1.frameworktv.sinaapp.com/">美丽三沙</a>');
 
 }
 
@@ -39,6 +38,9 @@ function onTextMsg(session) {
 
 /**
  * 小视频消息
+ comingUserId:+oANM9uOlah7w-3IVUObiOFlYoJNQ
+ MediaId:Lzg9mCCxm25ISax00t8PcGixox8_qF_5TYL6puqsQmuYh7VX1jf8fUtlzRBu1aIN
+ ThumbMediaId:cQARzHoqi58t7v0oKty_TYolbwXl2e_U_3onm3KwBIi0EsfNE1vZ0Yxan6vHsyOD
  */
 function onShortVideoMsg(session) {
     var comingUserId = session.incomingMessage.FromUserName;
@@ -52,44 +54,3 @@ function onShortVideoMsg(session) {
 
 }
 
-//获取accessToken
-
-/*utils.getAccessToken(function(e,token){
-    console.log(token);
-});*/
-
-//设置公众号客服
-var userObj={
-    kf_account : 'user1@xingfusansha',
-    kf_nick : 'user1',
-    kf_id : '11',
-    nickname : 'kefu1',
-    password : 'xingfusansha1'
-};
-var postData=JSON.stringify(userObj);
-
-
-var options = {
-    host: 'api.weixin.qq.com',
-    headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': postData.length
-    },
-    path: '/customservice/kfaccount/add?access_token=POu0fTHSZssYM28vb9G2C54kNZ501yXZjZxzF0tJvh7U0cz0fkmTeYXIsjqGRNjoB_NRXPB5lV0BOGFLH9Yu9f_bmksPMdbdqhTqta6CNRM',
-    method: 'POST'
-};
-
-utils.postRequest(options, JSON.stringify(userObj), function(res) {
-    console.log('STATUS: ' + res.statusCode);
-    console.log('HEADERS: ' + JSON.stringify(res.headers));
-    res.setEncoding('utf8');
-    res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk);
-    });
-
-});
-/*
-utils.addServiceUser(userObj,function(error, response, body) {
-    console.log(error);
-    console.log(body);
-});*/
