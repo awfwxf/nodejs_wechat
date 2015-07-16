@@ -3,6 +3,7 @@
  */
 var utils=require('../lib/util.js');
 var AccessToken=require('../lib/accessToken');
+var qiniuUtil=require('../lib/qiniuUtil');
 var exports = module.exports;
 
 /**
@@ -19,12 +20,14 @@ var exports = module.exports;
  */
 function router(req, res) {
 
+    //Use req.params, req.body, or req.query instead
+
     console.log(req.param('type'));
     console.log(req.param('openid'));
     console.log(req.param('taskid'));
 
     //向指定用户发送消息
-    var msgObj={
+    /*var msgObj={
         touser:"oANM9uOlah7w-3IVUObiOFlYoJNQ",
         msgtype:"text",
         text:
@@ -34,7 +37,21 @@ function router(req, res) {
     };
     utils.sendMsgToUser(msgObj,function(error, response, body) {
         console.log(body);
+    });*/
+
+    //七牛fetch资源
+    var url='http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=bgfZ1dX-Qh4EBCXFRbhYU52DRXzOD8cetjekqOMqLnNuRLZF3rmZ4scmZg40b626MtHiwFNOW4KxccvZBy_I14w4qLt894siMGXRbm1De-g&media_id=yZomEIPXk9R3InL_3q4L9d604L_42Hsv61_XWU_lXeBOGB8MNOdk1tFql00vJ-er';
+    //
+    qiniuUtil.fetch(url,'wechatShortVideo.mp4',function(error, res, body) {
+        if(error){
+            console.log(error);
+        }else{
+            console.log(res.statusCode);
+            console.log(body);
+        }
+
     });
+
     res.end('done....');
 }
 
