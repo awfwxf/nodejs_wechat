@@ -41,7 +41,6 @@ function router(req, res) {
 
     //七牛fetch资源
     var url='http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=bgfZ1dX-Qh4EBCXFRbhYU52DRXzOD8cetjekqOMqLnNuRLZF3rmZ4scmZg40b626MtHiwFNOW4KxccvZBy_I14w4qLt894siMGXRbm1De-g&media_id=yZomEIPXk9R3InL_3q4L9d604L_42Hsv61_XWU_lXeBOGB8MNOdk1tFql00vJ-er';
-    //
     qiniuUtil.fetch(url,'wechatShortVideo.mp4',function(error, res, body) {
         if(error){
             console.log(error);
@@ -49,8 +48,8 @@ function router(req, res) {
             console.log(res.statusCode);
             console.log(body);
         }
-
     });
+
 
     res.end('done....');
 }
