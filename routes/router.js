@@ -5,6 +5,7 @@
 var Wechat = require('../lib/wechat');
 var msgRouter = require('./msg-router');
 var API=require('./api-router');
+var Test=require('./test-router');
 //config
 var config = require('../config')();
 
@@ -16,6 +17,8 @@ module.exports=function(app){
     app.post('/wechat', wechat.handleRequest.bind(wechat));
     //
     app.get('/wxapi', API.router);
+
+    app.get('/test', Test.router);
 
     //消息处理路由
     msgRouter(wechat);

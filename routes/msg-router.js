@@ -51,6 +51,7 @@ function onShortVideoMsg(session) {
     var rspText='已收到您提交的视频：\n comingUserId:'+comingUserId+'\n MediaId:'+MediaId+'\n ThumbMediaId:'+ThumbMediaId;
 
     session.replyTextMessage(rspText);
+    //
 
 }
 
