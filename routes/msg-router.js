@@ -4,6 +4,7 @@
 var utils=require('../lib/util.js');
 var qiniuUtil=require('../lib/qiniuUtil');
 var AccessToken=require('../lib/accessToken');
+var ApiParamsCache=require('../lib/apiParamsCache');
 
 module.exports = function (wechat) {
     //
@@ -45,7 +46,7 @@ function onTextMsg(session) {
 
 /**
  * 小视频消息
- comingUserId:+oANM9uOlah7w-3IVUObiOFlYoJNQ
+ comingUserId:oANM9uOlah7w-3IVUObiOFlYoJNQ
  MediaId:Lzg9mCCxm25ISax00t8PcGixox8_qF_5TYL6puqsQmuYh7VX1jf8fUtlzRBu1aIN
  ThumbMediaId:cQARzHoqi58t7v0oKty_TYolbwXl2e_U_3onm3KwBIi0EsfNE1vZ0Yxan6vHsyOD
  */
@@ -56,9 +57,6 @@ function onShortVideoMsg(session) {
     var MediaId = session.incomingMessage.MediaId;
     //var ThumbMediaId = session.incomingMessage.ThumbMediaId;
 
-    /*var rspText='已收到您提交的视频：\n comingUserId:'+comingUserId+'\n MediaId:'+MediaId;
-    session.replyTextMessage(rspText);*/
-
     //开始调用七牛fetch资源，然后通知后端
     //获取token
     AccessToken.getAccessToken(function(error,token){
@@ -68,16 +66,35 @@ function onShortVideoMsg(session) {
             session.replyTextMessage(rspText);
         }else{
             var url='http://file.api.weixin.qq.com/cgi-bin/media/get?access_token='+token+'&media_id='+MediaId;
-            qiniuUtil.fetch(url,comingUserId+'_'+new Date().getTime()+'.mp4',function(error, res, body) {
+            var fileName=comingUserId+'_'+new Date().getTime()+'.mp4';
+            qiniuUtil.fetch(url, fileName ,function(error, res, body) {
                 if(error){
                     var rspText='视频上传错误,请联系管理员。'+error;
                     session.replyTextMessage(rspText);
                 }else{
                     var status=res.statusCode;
                     if(status===200){
-                        //成功
+
+                        //上传到七牛空间成功，是否需要考虑调用服务器的成功与否通知????????????？
                         var rspText='上传成功,已收到你的视频';
                         session.replyTextMessage(rspText);
+                        /*
+                            上传成功后调用后端server
+                         */
+                        var callParmas={video : qiniuUtil.getFileLinkUrl(fileName),openid: comingUserId};
+                        callServerApi(callParmas,function(error, response, body){
+                            if(error){
+                                //这里可能的错误有：调用错误，还有可能是缓存的orderno为空.....!!!!!!!!!!!!!!!!!
+                                console.log('callServer error: '+error);
+                            }else{
+                                //调用成功
+                                /*
+                                   此处是否要删除缓存的key?????????????????????
+                                 */
+                                console.log('callServer success....');
+                                console.log(body);
+                            }
+                        });
                     }else{
                         try{
                             var msgBody=JSON.parse(body);
@@ -92,4 +109,28 @@ function onShortVideoMsg(session) {
             });
         }
     });
+}
+
+/**
+ * 调用后端接口，传递视频链接参数
+ * @param params  object type
+ * @param callback
+ */
+function callServerApi(params,callback){
+    //获取缓存的订单编号
+    var cacheParams=ApiParamsCache.get(params['openid']);
+    if(!cacheParams){
+        callback('this cache orderno is null.');
+    }else{
+        //call url
+        var callUrl='http://xfss.weicoms.com:1337/Product/'+cacheParams['orderno'];
+        var options = {
+            url: callUrl,
+            method: 'PUT',
+            json:true,
+            body: params  //{data:{channel : "aaa",appkey : "bbb"},sign : "ccc",token : "ddd"}
+        };
+        utils.request(options,callback);
+    }
+
 }

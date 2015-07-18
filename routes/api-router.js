@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 15-7-15.
  */
-var utils=require('../lib/util.js');
+var utils=require('../lib/util');
 var exports = module.exports;
 //
 var ApiCache=require('../lib/apiParamsCache');
@@ -35,10 +35,9 @@ function router(req, res) {
     var apiType=req.query.type;
     var openId=req.query.openid;
     var orderNo=req.query.orderno;
-
+    //
     var resutlObj=new Object();
     resutlObj.msg='';
-
     if(apiType){
         if(apiType === 'sendmsg'){
             if(openId && orderNo){
@@ -83,19 +82,6 @@ function router(req, res) {
         //回复调用结果
         res.end(JSON.stringify(resutlObj));
     }
-
-    //向指定用户发送消息
-    /*var msgObj={
-        touser:"oANM9uOlah7w-3IVUObiOFlYoJNQ",
-        msgtype:"text",
-        text:
-        {
-            content: "已收到前面提交的任务反馈，请点选右下角的+，然后选择小视频"
-        }
-    };
-    utils.sendMsgToUser(msgObj,function(error, response, body) {
-        console.log(body);
-    });*/
 
 }
 
